@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo3</title>
+    <style>
+        h1, h2, div, p {
+            text-align: center;
+            margin-block: 0;
+        }
+
+        a {
+            font-size: 3rem;
+        }
+        p {
+            font-weight: 700;
+            font-size: 4rem;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        img {
+            display: block;
+        }
+
+        .py-20 {
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mx-auto {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div><a href="/">🏠</a></div>
+    <h1>Renderizado</h1>
+    <h2>Ejemplo 3: CSR Javascript</h2>
+    <ul id="product-list"></ul>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const productList = document.getElementById('product-list');
+
+            async function fetchData() {
+                try {
+                    const res = await fetch('https://rickandmortyapi.com/api/character');
+                    const data = await res.json();
+
+                    data.results.forEach(character => {
+                        const li = document.createElement('li');
+                        li.className = 'py-20 text-center';
+
+                        const img = document.createElement('img');
+                        img.src = character.image;
+                        img.alt = 'foto';
+                        img.className = 'mx-auto';
+
+                        const title = document.createElement('b');
+                        title.textContent = character.name
+
+                        const price = document.createElement('span');
+                        price.textContent = character.created
+
+                        li.appendChild(img);
+                        li.appendChild(title);
+                        li.appendChild(price);
+
+                        productList.appendChild(li);
+                    });
+                } catch (error) {
+                    console.error('Error fetching products:', error);
+                }
+            }
+
+            fetchData();
+        });
+    </script>
+</body>
+
+</html>
